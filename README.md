@@ -18,7 +18,10 @@ A premium landing page for Ringover, a SaaS suite that transforms every customer
 - **Final CTA** — Gradient blue-to-violet section with "Try 14 days free" and no credit card mention
 - **Footer** — Logo, product links, legal, social media, copyright
 - **Phone Dialer** — Interactive numeric keypad with call button and backspace for composing phone numbers
-- **Contact List** — Scrollable list of contacts displaying name, job title, and company with click-to-dial functionality
+- **Contact List** — Scrollable list of contacts with search, pagination, and enriched cards featuring avatars, closing scores, and visual hierarchy
+- **Closing Score Badge** — Color-coded score (0-100) displayed on each contact card with progress bar (red/orange/green)
+- **Contact Search** — Filter contacts by name with real-time search functionality
+- **Contact Pagination** — Navigate through contacts with 10 items per page
 
 ### Navbar Details
 
@@ -64,19 +67,7 @@ cd my-app
 npm install
 ```
 
-### 3. Set up environment variables
-
-This project does not require any environment variables to run locally. All features work out of the box.
-
-If you later add services like Supabase, add a `.env.local` file in the root directory:
-
-```env
-# Example (add as needed):
-# NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
-# NEXT_PUBLIC_SUPABASE_ANON_KEY=your_anon_key
-```
-
-### 4. Run the development server
+### 3. Run the development server
 
 ```bash
 npm run dev
@@ -88,104 +79,61 @@ Then open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ## 📁 Project Structure
 
-| Folder | Description |
-|--------|-------------|
-| `src/app` | Next.js App Router — pages, layouts, and global styles |
-| `src/app/home` | Home page with dialer and contact list |
-| `src/components` | Reusable UI components |
-| `src/components/home` | Home page components (Navbar, Dialer, ContactList) |
-
-### Key Files
-
-| File | Description |
+| Path | Description |
 |------|-------------|
-| `src/components/home/AppNavbar.tsx` | Fixed top navbar with logo, nav tabs, and user avatar |
-| `src/components/home/Dialer.tsx` | Phone number input with numeric keypad and call button |
-| `src/components/home/HomeClient.tsx` | Client-side wrapper for home page interactivity |
+| `src/app/` | Next.js App Router pages and layouts |
+| `src/components/` | Reusable React components |
+| `src/components/home/` | Home page components (HomeClient, ContactList) |
+| `src/lib/` | Utility functions and data |
+| `src/types/` | TypeScript type definitions |
+| `__tests__/` | Jest unit tests |
+| `public/` | Static assets |
 
 ## 🧪 Running Tests
 
-This project uses Jest for unit testing. Unit tests verify that small pieces of code (like functions or components) work correctly.
+Unit tests automatically verify that core functions work correctly — like formatting phone numbers.
 
 ### Run all tests
 
 ```bash
-npm test
+npx jest
 ```
 
 ### Run a specific test file
 
 ```bash
-npm test -- path/to/file.test.ts
+npx jest __tests__/formatPhoneNumber.test.ts
 ```
 
-### Watch mode (re-runs tests when files change)
+### Watch mode (re-runs on file change)
 
 ```bash
-npm test -- --watch
+npx jest --watch
 ```
 
-### Understanding test output
+### Reading test output
 
-- **PASS** — All tests in that file passed ✓
-- **FAIL** — Something broke. Look for the error message below the failure showing what was expected vs what happened
+- **PASS** — All tests passed, everything works ✅
+- **FAIL** — Something broke, check the error message below the failure ❌
 
-### What the tests cover
+Tests in this project cover:
 
-No tests exist yet. When you add test files, place them next to their source files using the naming convention `ComponentName.test.ts` or `ComponentName.test.tsx`.
-
-Example test structure:
-
-```typescript
-// src/components/home/Dialer.test.tsx
-import { render, screen } from '@testing-library/react'
-import Dialer from './Dialer'
-
-describe('Dialer', () => {
-  it('disables call button when input is empty', () => {
-    render(<Dialer />)
-    const callButton = screen.getByRole('button', { name: /call/i })
-    expect(callButton).toBeDisabled()
-  })
-
-  it('enables call button when 11 digits are entered', () => {
-    render(<Dialer />)
-    // ... test implementation
-  })
-})
-```
+- Phone number formatting (formatPhoneNumber function)
 
 ## 🚀 Deploy to Vercel
 
-The easiest way to deploy your Next.js app is with Vercel.
-
-### One-click deploy
+The easiest way to deploy this Next.js app is via Vercel.
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new)
 
 ### Step by step
 
-1. **Import your repository**
-   - Click "Import Project" on Vercel
-   - Select your GitHub repo: `YOUR_USERNAME/my-app`
+1. Click the button above or go to [vercel.com/new](https://vercel.com/new)
+2. Import your GitHub repository
+3. Vercel auto-detects Next.js — click **Deploy**
+4. Your site is live at `https://your-project.vercel.app`
 
-2. **Configure project**
-   - Framework Preset: Next.js
-   - Root Directory: `./` (default)
-   - Build Command: `npm run build` (auto-detected)
-   - Output Directory: `.next` (auto-detected)
-
-3. **Add environment variables** (if any)
-   - Go to Settings > Environment Variables
-   - Add each variable from your `.env.local` file
-   - Example: `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`
-
-4. **Deploy**
-   - Click "Deploy"
-   - Wait 1-2 minutes for the build
-   - Your app will be live at: `https://your-project.vercel.app`
-
-> 💡 **Important**: Make sure to add all environment variables in Vercel before deploying, or your app may break in production.
+> ⚠️ **Note**: This project does not require environment variables for deployment.
 
 ## 📝 License
 
