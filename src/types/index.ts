@@ -64,3 +64,11 @@ export interface Integration {
   logoUrl?: string
   category: string
 }
+
+export interface CallContact {
+  id: string
+  fullName: string
+  jobTitle: string
+  company: string
+  phone: string
+}

@@ -304,3 +304,67 @@ export const integrations: Integration[] = [
   { name: 'LinkedIn Sales Navigator', category: 'Prospection' },
   { name: 'Google Workspace', category: 'Productivité' },
 ]
+
+// ----------------------------------------------------------------
+// Contacts à appeler — softphone
+// ----------------------------------------------------------------
+import type { CallContact } from '@/types'
+
+export const callContacts: CallContact[] = [
+  {
+    id: 'contact-1',
+    fullName: 'Marie Dupont',
+    jobTitle: 'Directrice Commerciale',
+    company: 'Acme France',
+    phone: '+33 1 42 86 75 30',
+  },
+  {
+    id: 'contact-2',
+    fullName: 'Pierre Martin',
+    jobTitle: 'Responsable développement',
+    company: 'TechSolutions',
+    phone: '+33 1 55 50 12 48',
+  },
+  {
+    id: 'contact-3',
+    fullName: 'Sophie Bernard',
+    jobTitle: 'Chef de produit senior',
+    company: 'Innovatech',
+    phone: '+33 4 78 92 41 03',
+  },
+  {
+    id: 'contact-4',
+    fullName: 'Thomas Lefèvre',
+    jobTitle: 'Directeur des opérations',
+    company: 'Groupe Sigma',
+    phone: '+33 6 14 23 56 78',
+  },
+  {
+    id: 'contact-5',
+    fullName: 'Claire Moreau',
+    jobTitle: 'Head of Sales',
+    company: 'CloudScale',
+    phone: '+33 6 85 41 92 17',
+  },
+  {
+    id: 'contact-6',
+    fullName: 'Julien Girard',
+    jobTitle: 'VP Engineering',
+    company: 'DataPro',
+    phone: '+33 9 72 15 48 32',
+  },
+  {
+    id: 'contact-7',
+    fullName: 'Anne Petit',
+    jobTitle: 'DRH',
+    company: 'Ressources Plus',
+    phone: '+33 3 82 45 71 09',
+  },
+  {
+    id: 'contact-8',
+    fullName: 'François Leroy',
+    jobTitle: ' Consultant senior',
+    company: 'Stratégie & Co',
+    phone: '+33 6 23 58 64 91',
+  },
+]

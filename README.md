@@ -16,6 +16,8 @@ A premium landing page for Ringover, a SaaS suite that transforms every customer
 - **Integrations** — Logo grid: Salesforce, HubSpot, Pipedrive, Slack, Teams, Zapier
 - **Final CTA** — Gradient blue-to-violet section with "Try 14 days free" and no credit card mention
 - **Footer** — Logo, product links, legal, social media, copyright
+- **Phone Dialer** — Interactive numeric keypad with call button and backspace for composing phone numbers
+- **Contact List** — Scrollable list of contacts displaying name, job title, and company with click-to-dial functionality
 
 ## 🛠️ Tech Stack
 
@@ -74,29 +76,34 @@ Then open [http://localhost:3000](http://localhost:3000) in your browser.
 | Folder | Description |
 |--------|-------------|
 | `src/app` | Next.js App Router — pages, layouts, and global styles |
+| `src/app/home` | Home page with dialer and contact list |
 | `src/components/ui` | Reusable UI components (Button, Badge, AnimatedCanopy, LustreText) |
 | `src/components/layout` | Layout components (Navbar, Footer) |
 | `src/components/sections` | Landing page sections (Hero, Features, Pricing, etc.) |
-| `src/components/sections/features` | Dashboard widget components for the mockup |
-| `src/lib` | Utility functions and data (utils, data, types) |
-| `tailwind.config.ts` | Tailwind CSS configuration |
-| `next.config.mjs` | Next.js configuration |
+| `src/components/sections/features` | Feature-related components |
+| `src/components/sections/pricing` | Pricing section components |
+| `src/components/sections/testimonials` | Testimonials section components |
+| `src/components/sections/integrations` | Integrations section components |
+| `src/components/home` | Home page components (Dialer, ContactList, HomeClient) |
+| `src/types` | TypeScript type definitions |
+| `src/lib` | Utility functions and data |
+| `public` | Static assets |
 
 ## 🚀 Deploy to Vercel
 
-The easiest way to deploy this Next.js app:
+The easiest way to deploy this Next.js app is to use Vercel.
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new)
 
-**Step by step:**
+### Step by step:
 
-1. Click "Add New Project" on Vercel
-2. Import your GitHub repository (`my-app`)
-3. Vercel auto-detects Next.js — click "Deploy"
-4. Your site is live at `https://your-project.vercel.app`
+1. **Import your Git repository** — Click "Import Git Repository" and select your GitHub/GitLab repo
+2. **Add environment variables** — In Vercel dashboard, go to Settings > Environment Variables and add any variables from your `.env.local` (if applicable)
+3. **Deploy** — Click "Deploy" and wait for the build to complete
+4. **Your site is live** — Vercel will provide a URL like `your-app.vercel.app`
 
-> ⚠️ **Note**: If you add environment variables later (e.g., for Supabase), go to **Vercel > Settings > Environment Variables** and add each variable before redeploying.
+> 💡 **Note**: If you add Supabase or other services later, remember to add their environment variables in Vercel as well.
 
 ## 📝 License
 
-MIT — feel free to use this template for your projects.
+MIT
