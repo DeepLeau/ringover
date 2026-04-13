@@ -19,7 +19,7 @@ export function HomeClient() {
   return (
     <>
       <AppNavbar />
-      <div className="flex h-screen overflow-hidden bg-[var(--bg)] p-6 gap-6 pt-14">
+      <div className="flex h-screen overflow-hidden bg-[var(--bg)] p-6 gap-6 pt-20 justify-center">
         {/* Colonne gauche — Dialer */}
         <div className="w-[380px] shrink-0 flex items-center justify-center">
           <Dialer
@@ -32,7 +32,7 @@ export function HomeClient() {
         <div className="w-px bg-[var(--border)] shrink-0" />
 
         {/* Colonne droite — ContactList */}
-        <div className="w-[340px] shrink-0 flex flex-col overflow-hidden">
+        <div className="flex-1 min-w-0 flex flex-col overflow-hidden">
           <ContactList
             contacts={callContacts}
             onSelectContact={handleSelectContact}

@@ -22,6 +22,7 @@ A premium landing page for Ringover, a SaaS suite that transforms every customer
 - **Closing Score Badge** — Color-coded score (0-100) displayed on each contact card with progress bar (red/orange/green)
 - **Contact Search** — Filter contacts by name with real-time search functionality
 - **Contact Pagination** — Navigate through contacts with 10 items per page
+- **Responsive Layout** — Centered dialer and contact sections with proper vertical spacing from navbar
 
 ### Navbar Details
 
@@ -67,7 +68,11 @@ cd my-app
 npm install
 ```
 
-### 3. Run the development server
+### 3. Set up environment variables
+
+This project does not require any environment variables to run locally. All configuration is handled within the codebase.
+
+### 4. Run the development server
 
 ```bash
 npm run dev
@@ -77,21 +82,9 @@ Then open [http://localhost:3000](http://localhost:3000) in your browser.
 
 > 💡 **VS Code tip**: Open the integrated terminal with `Ctrl+`` (or `Cmd+`` on Mac)
 
-## 📁 Project Structure
-
-| Path | Description |
-|------|-------------|
-| `src/app/` | Next.js App Router pages and layouts |
-| `src/components/` | Reusable React components |
-| `src/components/home/` | Home page components (HomeClient, ContactList) |
-| `src/lib/` | Utility functions and data |
-| `src/types/` | TypeScript type definitions |
-| `__tests__/` | Jest unit tests |
-| `public/` | Static assets |
-
 ## 🧪 Running Tests
 
-Unit tests automatically verify that core functions work correctly — like formatting phone numbers.
+Unit tests automatically verify that key functions work correctly without errors.
 
 ### Run all tests
 
@@ -103,6 +96,7 @@ npx jest
 
 ```bash
 npx jest __tests__/formatPhoneNumber.test.ts
+npx jest __tests__/lib/contactUtils.test.ts
 ```
 
 ### Watch mode (re-runs on file change)
@@ -113,27 +107,44 @@ npx jest --watch
 
 ### Reading test output
 
-- **PASS** — All tests passed, everything works ✅
-- **FAIL** — Something broke, check the error message below the failure ❌
+- **PASS** — All tests passed, the code works correctly
+- **FAIL** — Something broke, check the error message below for details on which test failed and why
 
-Tests in this project cover:
+### What the tests cover
 
-- Phone number formatting (formatPhoneNumber function)
+| Test File | What It Tests |
+|-----------|---------------|
+| `__tests__/formatPhoneNumber.test.ts` | Phone number formatting logic (spaces, country codes) |
+| `__tests__/lib/contactUtils.test.ts` | Contact utility functions (search, pagination, scoring) |
+
+## 📁 Project Structure
+
+| Folder / File | Description |
+|---------------|-------------|
+| `src/app` | Next.js App Router pages and layouts |
+| `src/components` | React components including home page components |
+| `src/components/home` | Home page specific components like `HomeClient.tsx` |
+| `src/lib` | Utility functions and helpers |
+| `__tests__` | Jest unit tests |
+| `public` | Static assets (images, fonts) |
+| `tailwind.config.ts` | Tailwind CSS configuration |
+| `jest.config.ts` | Jest testing configuration |
+| `next.config.ts` | Next.js configuration |
 
 ## 🚀 Deploy to Vercel
 
-The easiest way to deploy this Next.js app is via Vercel.
+The easiest way to deploy this Next.js app is with Vercel.
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new)
 
 ### Step by step
 
-1. Click the button above or go to [vercel.com/new](https://vercel.com/new)
-2. Import your GitHub repository
-3. Vercel auto-detects Next.js — click **Deploy**
-4. Your site is live at `https://your-project.vercel.app`
+1. **Import your repository** — Click "Import Project" and select your GitHub repo
+2. **Configure project** — Vercel auto-detects Next.js, no build command changes needed
+3. **Add environment variables** — This project requires no environment variables
+4. **Deploy** — Click "Deploy" and wait ~1 minute
 
-> ⚠️ **Note**: This project does not require environment variables for deployment.
+Your app will be live at `https://your-project.vercel.app`.
 
 ## 📝 License
 
