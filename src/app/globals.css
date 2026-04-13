@@ -1,0 +1,67 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg:           #ffffff;
+  --surface-1:    #f8f9fa;
+  --surface-2:    #f4f4f5;
+  --accent:       #4f46e5;
+  --accent-hi:    #7c3aed;
+  --text-1:       #111827;
+  --text-2:       #6b7280;
+  --border:       #e5e7eb;
+}
+
+/* ── LustreText — shimmer sur texte mode light ──────────────────────────────── */
+@keyframes shine {
+  from { background-position: 200% center; }
+  to   { background-position: -200% center; }
+}
+.lustre-on-white {
+  background: linear-gradient(
+    90deg,
+    #111827 0%,
+    #111827 35%,
+    #4f46e5 50%,
+    #111827 65%,
+    #111827 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.animate-shine {
+  animation: shine linear infinite;
+}
+
+/* ── AnimatedCanopy — marquee horizontal ──────────────────────────────────── */
+@keyframes marquee-scroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(calc(-100% - 12px)); }
+}
+.marquee-track {
+  display: flex;
+  flex-shrink: 0;
+  gap: 12px;
+  animation: marquee-scroll 25s linear infinite;
+}
+.marquee-track-reverse {
+  display: flex;
+  flex-shrink: 0;
+  gap: 12px;
+  animation: marquee-scroll 25s linear infinite reverse;
+}
+.marquee-root:hover .marquee-track,
+.marquee-root:hover .marquee-track-reverse {
+  animation-play-state: paused;
+}
+
+/* ── Alignement boutons — garantie absolue ────────────────────────────────── */
+button,
+a[class*="h-"] {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
