@@ -10,7 +10,22 @@ const KEYPAD_KEYS = [
   ['*', '0', '#'],
 ]
 
-const MAX_NUMBER_LENGTH = 15
+const MAX_NUMBER_LENGTH = 11
+
+function formatPhoneNumber(digits: string): string {
+  // Découpage : +[2] [1] [2] [2] [2] [2] — ex: "33382457109" → "+33 3 82 45 71 09"
+  const parts: string[] = []
+  if (digits.length === 0) return ''
+  const d = digits
+  // +XX
+  parts.push('+' + d.slice(0, 2))
+  if (d.length > 2) parts.push(d.slice(2, 3))
+  if (d.length > 3) parts.push(d.slice(3, 5))
+  if (d.length > 5) parts.push(d.slice(5, 7))
+  if (d.length > 7) parts.push(d.slice(7, 9))
+  if (d.length > 9) parts.push(d.slice(9, 11))
+  return parts.join(' ')
+}
 
 interface DialerProps {
   dialedNumber: string
@@ -33,7 +48,7 @@ export function Dialer({ dialedNumber, onDialedNumberChange }: DialerProps) {
   }
 
   const startCall = () => {
-    if (dialedNumber.length > 0) {
+    if (dialedNumber.length === MAX_NUMBER_LENGTH) {
       setIsCalling(true)
     }
   }
@@ -42,18 +57,21 @@ export function Dialer({ dialedNumber, onDialedNumberChange }: DialerProps) {
     setIsCalling(false)
   }
 
+  const displayValue =
+    dialedNumber.length > 0 ? formatPhoneNumber(dialedNumber) : null
+
   return (
     <div className="w-full max-w-[340px] bg-[var(--surface-1)] border border-[var(--border)] rounded-xl p-6 shadow-sm">
       {/* Écran du numéro */}
       <div className="flex items-center gap-3 mb-6 bg-[var(--bg)] border border-[var(--border)] rounded-lg px-4 py-3">
         <span
-          className={`flex-1 text-center font-mono text-2xl tracking-wider min-h-[36px] flex items-center justify-center ${
-            dialedNumber.length > 0
-              ? 'text-[var(--text-1)]'
+          className={`flex-1 text-center font-mono tracking-wider min-h-[36px] flex items-center justify-center ${
+            displayValue
+              ? 'text-[var(--text-1)] text-xl'
               : 'text-[var(--text-3)] text-lg'
           }`}
         >
-          {dialedNumber.length > 0 ? dialedNumber : 'Composer un numéro'}
+          {displayValue ?? 'Composer un numéro'}
         </span>
         <button
           onClick={deleteLast}
@@ -92,7 +110,7 @@ export function Dialer({ dialedNumber, onDialedNumberChange }: DialerProps) {
         ) : (
           <button
             onClick={startCall}
-            disabled={dialedNumber.length === 0}
+            disabled={dialedNumber.length !== MAX_NUMBER_LENGTH}
             className="w-16 h-16 flex items-center justify-center rounded-full bg-[#16a34a] hover:bg-[#15803d] text-white transition-colors duration-150 shadow-md disabled:opacity-40 disabled:cursor-not-allowed"
             aria-label="Appeler"
           >
