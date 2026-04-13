@@ -71,4 +71,5 @@ export interface CallContact {
   jobTitle: string
   company: string
   phone: string
+  closingScore: number
 }

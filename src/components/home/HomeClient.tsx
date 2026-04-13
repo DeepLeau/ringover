@@ -32,7 +32,7 @@ export function HomeClient() {
         <div className="w-px bg-[var(--border)] shrink-0" />
 
         {/* Colonne droite — ContactList */}
-        <div className="flex-1 min-w-0 flex flex-col overflow-hidden">
+        <div className="w-[340px] shrink-0 flex flex-col overflow-hidden">
           <ContactList
             contacts={callContacts}
             onSelectContact={handleSelectContact}
