@@ -1,21 +1,19 @@
-'use client'
-
 interface LustreTextProps {
   text: string
   speed?: number
-  mode?: 'light'
+  mode?: 'dark' | 'light'
   className?: string
 }
 
 export function LustreText({
   text,
   speed = 5,
-  mode = 'light',
+  mode = 'dark',
   className = '',
 }: LustreTextProps) {
   return (
     <span
-      className={`animate-shine lustre-on-white ${className}`}
+      className={`animate-shine ${mode === 'light' ? 'lustre-on-white' : 'lustre-dark'} ${className}`}
       style={{
         animationDuration: `${speed}s`,
         animationTimingFunction: 'linear',

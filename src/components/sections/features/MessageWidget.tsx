@@ -1,9 +1,10 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { Sparkles } from 'lucide-react'
 
 const transcriptText =
-  'Bonjour Thomas, j\'ai remarqué que vous avez consulté notre page tarifs hier. Avez-vous des questions sur le plan Business ? Je pourrais vous faire une démo personnalisée si vous le souhaitez. Bien cordialement, Sophie.'
+  "Bonjour Thomas, j'ai remarqué que vous avez consulté notre page tarifs. Avez-vous des questions sur le plan Business ? Je pourrais vous faire une démo personnalisée si vous le souhaitez. Bien cordialement, Sophie."
 
 export function MessageWidget() {
   const [displayedText, setDisplayedText] = useState('')
@@ -26,27 +27,61 @@ export function MessageWidget() {
   }, [charIndex])
 
   return (
-    <div className="rounded-xl border border-[var(--border)] bg-[var(--surface-1)] p-5 shadow-sm min-h-[220px]">
+    <div
+      className="rounded-[var(--r-lg)] border border-[var(--border)] bg-[var(--bg-2)] p-5 min-h-[220px]"
+      style={{ boxShadow: '0 0 0 1px rgba(255,255,255,0.03) inset' }}
+    >
+      {/* Header */}
       <div className="flex items-center gap-2 mb-4">
-        <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-        <span className="text-xs text-[var(--text-2)]">Transcription IA en cours...</span>
+        <div
+          className="w-2 h-2 rounded-full animate-pulse"
+          style={{ background: 'var(--green)' }}
+        />
+        <span className="text-[11px] font-medium text-[var(--text-2)]">
+          Réponse IA en cours…
+        </span>
+        <Sparkles
+          size={12}
+          strokeWidth={1.5}
+          className="ml-auto"
+          style={{ color: 'var(--accent-hi)' }}
+        />
       </div>
 
-      <div className="bg-[var(--surface-2)] rounded-lg p-4 border border-[var(--border)]">
-        <p className="text-sm text-[var(--text-2)] leading-relaxed min-h-[80px] font-mono">
+      {/* Message bubble */}
+      <div
+        className="rounded-lg p-4"
+        style={{
+          background: 'rgba(255,255,255,0.03)',
+          border: '1px solid var(--border)',
+        }}
+      >
+        <p
+          className="text-[13px] leading-relaxed min-h-[80px]"
+          style={{
+            fontFamily: 'var(--font-mono), monospace',
+            color: 'var(--text-2)',
+          }}
+        >
           {displayedText}
-          {charIndex < transcriptText.length && (
-            <span className="inline-block w-0.5 h-4 bg-[var(--accent)] animate-pulse align-middle ml-0.5" />
-          )}
-          {!showCursor && charIndex >= transcriptText.length && (
-            <span className="inline-block w-0.5 h-4 bg-[var(--accent)] align-middle ml-0.5" />
-          )}
+          {charIndex < transcriptText.length ? (
+            <span
+              className="inline-block w-0.5 h-4 animate-pulse align-middle ml-0.5"
+              style={{ background: 'var(--accent-hi)' }}
+            />
+          ) : !showCursor ? (
+            <span
+              className="inline-block w-0.5 h-4 align-middle ml-0.5"
+              style={{ background: 'var(--accent-hi)' }}
+            />
+          ) : null}
         </p>
       </div>
 
-      <div className="mt-3 flex items-center justify-between text-xs text-[var(--text-2)]">
-        <span>Transcrit en 0.3s</span>
-        <span className="text-green-600">Précision 96%</span>
+      {/* Footer */}
+      <div className="mt-3 flex items-center justify-between text-[11px]">
+        <span style={{ color: 'var(--dim)' }}>Généré en 0.3s</span>
+        <span style={{ color: 'var(--green)' }}>Pertinence 96%</span>
       </div>
     </div>
   )
