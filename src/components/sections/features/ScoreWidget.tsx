@@ -1,15 +1,16 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { Trophy } from 'lucide-react'
 
 export function ScoreWidget() {
   const [score, setScore] = useState(0)
   const targetScore = 87
 
   const metrics = [
-    { label: 'Clarté', value: 92 },
-    { label: 'Rythme', value: 78 },
-    { label: 'Écoute', value: 85 },
+    { label: 'Priorité', value: 92 },
+    { label: 'Timing', value: 78 },
+    { label: 'Contexte', value: 85 },
     { label: 'Closing', value: 88 },
   ]
 
@@ -28,33 +29,78 @@ export function ScoreWidget() {
   }, [])
 
   return (
-    <div className="rounded-xl border border-[var(--border)] bg-[var(--surface-1)] p-6 shadow-sm min-h-[220px]">
-      <p className="text-sm text-[var(--text-1)] font-medium mb-4">Score de performance IA</p>
+    <div
+      className="rounded-[var(--r-lg)] border border-[var(--border)] bg-[var(--bg-2)] p-6 min-h-[220px]"
+      style={{ boxShadow: '0 0 0 1px rgba(255,255,255,0.03) inset' }}
+    >
+      {/* Header */}
+      <div className="flex items-center gap-2 mb-4">
+        <Trophy size={14} strokeWidth={1.5} style={{ color: 'var(--yellow)' }} />
+        <p className="text-[13px] font-medium" style={{ color: 'var(--text-1)' }}>
+          Score de priorité
+        </p>
+      </div>
 
+      {/* Score display */}
       <div className="mb-4">
-        <div className="text-5xl font-bold text-[var(--accent)]">
-          {Math.min(score, 100)}
-          <span className="text-xl text-[var(--text-2)]">/100</span>
+        <div className="flex items-baseline gap-1">
+          <span
+            className="text-5xl font-semibold"
+            style={{
+              fontFamily: 'var(--font-bricolage), sans-serif',
+              letterSpacing: '-0.04em',
+              color: 'var(--accent-hi)',
+            }}
+          >
+            {Math.min(score, 100)}
+          </span>
+          <span className="text-xl" style={{ color: 'var(--text-2)' }}>
+            /100
+          </span>
         </div>
-        <div className="h-2 bg-[var(--surface-2)] rounded-full overflow-hidden mt-2">
+        {/* Progress bar */}
+        <div
+          className="h-1.5 rounded-full overflow-hidden mt-2"
+          style={{ background: 'rgba(255,255,255,0.06)' }}
+        >
           <div
-            className="h-full bg-[var(--accent)] rounded-full transition-all duration-75"
-            style={{ width: `${Math.min(score, 100)}%` }}
+            className="h-full rounded-full transition-all duration-75"
+            style={{
+              width: `${Math.min(score, 100)}%`,
+              background: 'linear-gradient(90deg, var(--accent), var(--accent-hi))',
+            }}
           />
         </div>
       </div>
 
-      <div className="space-y-2">
+      {/* Metrics breakdown */}
+      <div className="space-y-2.5">
         {metrics.map(({ label, value }) => (
-          <div key={label} className="flex items-center gap-3 text-xs">
-            <span className="text-[var(--text-2)] w-16">{label}</span>
-            <div className="flex-1 h-1.5 bg-[var(--surface-2)] rounded-full overflow-hidden">
+          <div key={label} className="flex items-center gap-3 text-[12px]">
+            <span
+              className="w-16 flex-shrink-0"
+              style={{ color: 'var(--dim)' }}
+            >
+              {label}
+            </span>
+            <div
+              className="flex-1 h-1.5 rounded-full overflow-hidden"
+              style={{ background: 'rgba(255,255,255,0.06)' }}
+            >
               <div
-                className="h-full bg-[var(--accent)]/40 rounded-full"
-                style={{ width: `${Math.min(value, 100)}%` }}
+                className="h-full rounded-full"
+                style={{
+                  width: `${value}%`,
+                  background: 'rgba(99,102,241,0.4)',
+                }}
               />
             </div>
-            <span className="text-[var(--text-2)] w-8 text-right">{value}%</span>
+            <span
+              className="w-8 text-right flex-shrink-0 tabular-nums"
+              style={{ color: 'var(--text-2)' }}
+            >
+              {value}%
+            </span>
           </div>
         ))}
       </div>

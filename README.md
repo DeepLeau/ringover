@@ -17,25 +17,9 @@ A premium landing page for Ringover, a SaaS suite that transforms every customer
 - **Integrations** — Logo grid: Salesforce, HubSpot, Pipedrive, Slack, Teams, Zapier
 - **Final CTA** — Gradient blue-to-violet section with "Try 14 days free" and no credit card mention
 - **Footer** — Logo, product links, legal, social media, copyright
-- **Phone Dialer** — Interactive numeric keypad with call button and backspace for composing phone numbers
-- **Contact List** — Scrollable list of contacts with search, pagination, and enriched cards featuring avatars, closing scores, and visual hierarchy
-- **Closing Score Badge** — Color-coded score (0-100) displayed on each contact card with progress bar (red/orange/green)
-- **Contact Search** — Filter contacts by name with real-time search functionality
-- **Contact Pagination** — Navigate through contacts with 10 items per page
-- **Responsive Layout** — Centered dialer and contact sections with proper vertical spacing from navbar
-
-### Navbar Details
-
-- **Logo** — Green square with bold white "R" on the left
-- **Navigation Tabs** — Calls (active/highlighted), Chat, Visio centered in the navbar
-- **User Avatar** — Circular profile icon on the right
-
-### Dialer Rules
-
-- Accepts exactly 11 digits starting with country code (without leading zero)
-- Displays formatted as: `+33 3 82 45 71 09`
-- Call button disabled until exactly 11 digits are entered
-- Input blocked after 11 digits reached
+- **FAQ Section** — Expandable accordion with common questions
+- **Team Section** — Showcase of team members or company leadership
+- **Animated Components** — Smooth animations powered by Framer Motion
 
 ## 🛠️ Tech Stack
 
@@ -52,8 +36,8 @@ A premium landing page for Ringover, a SaaS suite that transforms every customer
 ### Prerequisites
 
 - **Node.js 18+** — [Download here](https://nodejs.org/)
-- **A code editor** — [VS Code](https://code.visualstudio.com/) recommended
-- **Git installed**
+- **A code editor** — We recommend [VS Code](https://code.visualstudio.com/) with the Tailwind CSS IntelliSense extension
+- **Git** — [Download here](https://git-scm.com/)
 
 ### 1. Clone the repository
 
@@ -68,11 +52,7 @@ cd my-app
 npm install
 ```
 
-### 3. Set up environment variables
-
-This project does not require any environment variables to run locally. All configuration is handled within the codebase.
-
-### 4. Run the development server
+### 3. Run the development server
 
 ```bash
 npm run dev
@@ -80,13 +60,19 @@ npm run dev
 
 Then open [http://localhost:3000](http://localhost:3000) in your browser.
 
-> 💡 **VS Code tip**: Open the integrated terminal with `Ctrl+`` (or `Cmd+`` on Mac)
+> 💡 **VS Code tip**: Open the integrated terminal with `Ctrl+`` (or ``Cmd+`` on Mac) and type the command above.
 
 ## 🧪 Running Tests
 
-Unit tests automatically verify that key functions work correctly without errors.
+Unit tests verify that specific parts of the code work correctly. When you see **PASS**, everything is working. When you see **FAIL**, something needs to be fixed.
 
 ### Run all tests
+
+```bash
+npm test
+```
+
+Or using Jest directly:
 
 ```bash
 npx jest
@@ -99,52 +85,84 @@ npx jest __tests__/formatPhoneNumber.test.ts
 npx jest __tests__/lib/contactUtils.test.ts
 ```
 
-### Watch mode (re-runs on file change)
+### Watch mode (re-runs tests automatically when files change)
 
 ```bash
 npx jest --watch
 ```
 
-### Reading test output
+### Understanding test output
 
-- **PASS** — All tests passed, the code works correctly
-- **FAIL** — Something broke, check the error message below for details on which test failed and why
+- **PASS** — All assertions passed, the code works as expected
+- **FAIL** — Something broke, check the error message below for what went wrong
 
 ### What the tests cover
 
-| Test File | What It Tests |
-|-----------|---------------|
-| `__tests__/formatPhoneNumber.test.ts` | Phone number formatting logic (spaces, country codes) |
-| `__tests__/lib/contactUtils.test.ts` | Contact utility functions (search, pagination, scoring) |
+- **`__tests__/formatPhoneNumber.test.ts`** — Tests for phone number formatting utilities (input validation, formatting patterns, edge cases)
+- **`__tests__/lib/contactUtils.test.ts`** — Tests for contact-related utility functions
 
 ## 📁 Project Structure
 
-| Folder / File | Description |
-|---------------|-------------|
-| `src/app` | Next.js App Router pages and layouts |
-| `src/components` | React components including home page components |
-| `src/components/home` | Home page specific components like `HomeClient.tsx` |
-| `src/lib` | Utility functions and helpers |
-| `__tests__` | Jest unit tests |
-| `public` | Static assets (images, fonts) |
-| `tailwind.config.ts` | Tailwind CSS configuration |
-| `jest.config.ts` | Jest testing configuration |
-| `next.config.ts` | Next.js configuration |
+```
+my-app/
+├── src/
+│   ├── app/                      # Next.js App Router (pages & layout)
+│   │   ├── globals.css           # Global styles & Tailwind imports
+│   │   ├── layout.tsx            # Root layout with navbar structure
+│   │   └── page.tsx              # Main landing page
+│   ├── components/
+│   │   ├── ui/                   # Reusable UI components
+│   │   │   ├── AnimatedCanopy.tsx    # Animated decorative component
+│   │   │   ├── Badge.tsx             # Badge/label component
+│   │   │   ├── FeatureCard.tsx       # Feature card with icon
+│   │   │   ├── LustreText.tsx        # Premium text styling
+│   │   │   ├── PricingCard.tsx       # Pricing plan card
+│   │   │   └── TestimonialCard.tsx  # Customer testimonial card
+│   │   └── sections/             # Page sections
+│   │       ├── CtaFinalSection.tsx   # Final call-to-action
+│   │       ├── ComparatifSection.tsx # Comparison section
+│   │       ├── FAQSection.tsx        # FAQ accordion
+│   │       ├── HeroSection.tsx       # Hero banner
+│   │       ├── PricingSection.tsx    # Pricing plans
+│   │       ├── TeamSection.tsx       # Team showcase
+│   │       ├── TestimonialsSection.tsx # Customer testimonials
+│   │       └── features/             # Feature-specific widgets
+│   │           ├── MessageWidget.tsx    # Messaging feature
+│   │           └── ScoreWidget.tsx       # Scoring feature
+│   └── lib/                     # Utility functions & helpers
+├── __tests__/                   # Jest test files
+├── public/                      # Static assets
+├── tailwind.config.ts           # Tailwind CSS configuration
+├── tsconfig.json                # TypeScript configuration
+└── package.json                 # Dependencies & scripts
+```
+
+## 🔧 Available Scripts
+
+| Command | Description |
+|---------|-------------|
+| `npm run dev` | Start development server at localhost:3000 |
+| `npm run build` | Build production-ready bundle |
+| `npm run start` | Start production server |
+| `npm run lint` | Run ESLint to check code quality |
+| `npm test` | Run all Jest tests |
+| `npx jest --watch` | Run tests in watch mode |
 
 ## 🚀 Deploy to Vercel
 
 The easiest way to deploy this Next.js app is with Vercel.
 
+### One-click deploy
+
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new)
 
 ### Step by step
 
-1. **Import your repository** — Click "Import Project" and select your GitHub repo
-2. **Configure project** — Vercel auto-detects Next.js, no build command changes needed
-3. **Add environment variables** — This project requires no environment variables
-4. **Deploy** — Click "Deploy" and wait ~1 minute
+1. **Import your repository** — Click "Import Project" on Vercel, select your GitHub repo
+2. **Configure project** — Vercel auto-detects Next.js settings (no special configuration needed)
+3. **Deploy** — Click "Deploy" — your site will be live at `https://your-project.vercel.app`
 
-Your app will be live at `https://your-project.vercel.app`.
+> ⚠️ **Note**: This project doesn't require environment variables, so you can deploy directly without any configuration.
 
 ## 📝 License
 

@@ -1,115 +1,286 @@
 'use client'
 
+import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Check, Minus } from 'lucide-react'
-import { Badge } from '@/components/ui/Badge'
-import { Button } from '@/components/ui/Button'
-import { cn } from '@/lib/utils'
+import { pricingPlans } from '@/lib/data'
 import type { PricingPlan } from '@/types'
 
-interface PricingSectionProps {
-  plans: PricingPlan[]
-}
+export function PricingSection() {
+  const [isAnnual, setIsAnnual] = useState(false)
 
-const fadeInUp = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0 },
-}
-
-const staggerContainer = {
-  hidden: { opacity: 0 },
-  visible: { opacity: 1, transition: { staggerChildren: 0.1 } },
-}
-
-export function PricingSection({ plans }: PricingSectionProps) {
   return (
-    <section id="pricing" className="py-24 px-6 bg-[var(--bg)]">
-      <div className="max-w-7xl mx-auto">
+    <section
+      id="tarifs"
+      className="py-20 relative"
+      style={{ background: 'var(--bg)' }}
+    >
+      {/* Radial glow */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            'radial-gradient(ellipse 60% 50% at 50% 30%, rgba(99,102,241,.05) 0%, transparent 70%)',
+        }}
+      />
+
+      <div className="container mx-auto px-8 max-w-[1200px]">
         {/* Header */}
-        <div className="text-center max-w-2xl mx-auto mb-16">
-          <Badge>Tarifs</Badge>
-          <h2 className="text-3xl md:text-4xl font-semibold text-[var(--text-1)] tracking-tight mt-4 mb-4">
-            Un plan adapté à chaque équipe.
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-10"
+        >
+          {/* Tag */}
+          <div
+            className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[11px] font-semibold uppercase tracking-widest mb-4"
+            style={{
+              background: 'var(--accent-dim)',
+              border: '1px solid rgba(99,102,241,.3)',
+              color: 'var(--accent-hi)',
+            }}
+          >
+            <span
+              className="w-1.5 h-1.5 rounded-full flex-shrink-0"
+              style={{ background: 'var(--accent)' }}
+            />
+            Tarifs
+          </div>
+
+          <h2
+            className="text-gradient-h"
+            style={{
+              fontFamily: 'var(--font-bricolage), sans-serif',
+              fontSize: 'clamp(22px, 2.2vw, 32px)',
+              fontWeight: 300,
+              letterSpacing: '-0.03em',
+              lineHeight: 1.12,
+              marginBottom: '10px',
+            }}
+          >
+            Un plan adapté à chaque équipe
           </h2>
-          <p className="text-base text-[var(--text-2)] leading-relaxed">
+          <p className="text-[15px] leading-relaxed" style={{ color: 'var(--muted)', maxWidth: 500, margin: '0 auto' }}>
             Commencez gratuitement et évoluez selon vos besoins. Aucune carte bancaire requise.
           </p>
-        </div>
 
-        {/* Plans Grid */}
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={staggerContainer}
-          className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8"
+          {/* Toggle */}
+          <div className="flex items-center justify-center gap-3 mt-5">
+            <span className="text-[13px]" style={{ color: 'var(--muted)' }}>
+              Mensuel
+            </span>
+            {/* Toggle switch */}
+            <button
+              onClick={() => setIsAnnual(!isAnnual)}
+              className="relative w-[44px] h-[24px] rounded-full transition-all duration-200 cursor-pointer"
+              style={{
+                background: isAnnual ? 'var(--accent-dim)' : 'var(--glass-bg)',
+                border: '1px solid var(--glass-border)',
+              }}
+              aria-label="Basculer entre mensuel et annuel"
+            >
+              <span
+                className="absolute top-[2px] left-[2px] w-[18px] h-[18px] rounded-full transition-all duration-200"
+                style={{
+                  background: isAnnual ? 'var(--accent-hi)' : 'var(--dim)',
+                  transform: isAnnual ? 'translateX(20px)' : 'translateX(0)',
+                }}
+              />
+            </button>
+            <span className="text-[13px]" style={{ color: 'var(--muted)' }}>
+              Annuel{' '}
+              <span
+                className="inline-flex px-2 py-0.5 rounded-full text-[10px] font-semibold ml-1"
+                style={{
+                  background: 'rgba(99,102,241,.2)',
+                  color: 'var(--accent-hi)',
+                }}
+              >
+                -20%
+              </span>
+            </span>
+          </div>
+        </motion.div>
+
+        {/* Cards grid */}
+        <div
+          className="grid gap-5"
+          style={{
+            gridTemplateColumns: '1fr 1.1fr 1fr',
+            alignItems: 'start',
+          }}
         >
-          {plans.map((plan) => (
+          {pricingPlans.map((plan, index) => (
             <motion.div
               key={plan.id}
-              variants={fadeInUp}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
               whileHover={{ y: -4 }}
-              className={cn(
-                'relative flex flex-col gap-5 p-6 rounded-xl border bg-white transition-all duration-200',
+              className="relative rounded-[var(--r-xl)] p-7 flex flex-col gap-5 transition-all duration-200"
+              style={
                 plan.highlighted
-                  ? 'border-[var(--accent)] shadow-lg scale-[1.02]'
-                  : 'border-[var(--border)] hover:border-[var(--accent)]'
-              )}
+                  ? {
+                      background:
+                        'linear-gradient(160deg, rgba(99,102,241,.12) 0%, rgba(30,20,60,.6) 40%, rgba(165,180,252,.08) 100%)',
+                      border: '1px solid rgba(99,102,241,.25)',
+                      backdropFilter: 'blur(16px)',
+                      marginTop: '-20px',
+                      marginBottom: '-20px',
+                      boxShadow: '0 0 48px rgba(99,102,241,.15)',
+                    }
+                  : {
+                      background:
+                        'linear-gradient(160deg, rgba(99,102,241,.05) 0%, rgba(17,17,17,.5) 50%, rgba(165,180,252,.03) 100%)',
+                      border: '1px solid var(--glass-border)',
+                      backdropFilter: 'blur(12px)',
+                    }
+              }
             >
-              {/* Popular Badge */}
+              {/* Top gradient line */}
+              <div
+                className="absolute top-0 left-[20%] right-[20%] rounded-b"
+                style={{
+                  height: plan.highlighted ? '3px' : '2px',
+                  background: plan.highlighted
+                    ? 'linear-gradient(90deg, transparent, var(--accent-hi), var(--accent), transparent)'
+                    : 'linear-gradient(90deg, transparent, rgba(99,102,241,.5), transparent)',
+                }}
+              />
+
+              {/* Popular badge */}
               {plan.highlighted && (
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                  <span className="px-3 py-1 rounded-full bg-[var(--accent)] text-white text-xs font-medium">
-                    Plan le plus populaire
+                <div
+                  className="absolute -top-3 left-1/2 -translate-x-1/2"
+                  style={{
+                    background: 'linear-gradient(135deg, var(--accent), var(--accent-hi))',
+                    borderRadius: '100px',
+                    padding: '3px 12px',
+                  }}
+                >
+                  <span
+                    className="text-[10px] font-bold uppercase tracking-widest text-white"
+                  >
+                    Populaire
                   </span>
                 </div>
               )}
 
-              {/* Plan Info */}
+              {/* Plan name */}
               <div>
-                <p className="text-sm font-medium text-[var(--text-2)]">{plan.name}</p>
-                <div className="flex items-end gap-1 mt-1.5">
-                  <span className="text-4xl font-semibold text-[var(--text-1)] tracking-tight">
-                    {plan.price}
+                <p
+                  className="text-[15px] font-medium mb-2"
+                  style={{ color: 'var(--text-1)' }}
+                >
+                  {plan.name}
+                </p>
+
+                {/* Price */}
+                <div className="flex items-baseline gap-1 mb-2">
+                  <span
+                    className="text-[38px] font-extralight tracking-tight"
+                    style={{
+                      fontFamily: 'var(--font-bricolage), sans-serif',
+                      letterSpacing: '-0.04em',
+                      lineHeight: 1,
+                      ...(plan.highlighted
+                        ? {
+                            background:
+                              'linear-gradient(135deg, var(--peak), var(--accent-hi))',
+                            WebkitBackgroundClip: 'text',
+                            WebkitTextFillColor: 'transparent',
+                            backgroundClip: 'text',
+                          }
+                        : { color: 'var(--text-1)' }),
+                    }}
+                  >
+                    {isAnnual && plan.price !== '0'
+                      ? `${Math.round(Number(plan.price) * 0.8)}`
+                      : plan.price}
+                    {plan.price !== '0' ? '€' : ''}
                   </span>
-                  {plan.period && (
-                    <span className="text-[var(--text-2)] text-sm mb-1.5">{plan.period}</span>
+                  {plan.price !== '0' && (
+                    <span className="text-[13px]" style={{ color: 'var(--muted)' }}>
+                      /{plan.period}
+                    </span>
                   )}
                 </div>
-                <p className="text-sm text-[var(--text-2)] mt-2">{plan.description}</p>
+
+                <p className="text-[13px] leading-relaxed" style={{ color: 'var(--muted)', minHeight: 44 }}>
+                  {plan.description}
+                </p>
               </div>
 
-              {/* CTA */}
-              <Button
-                variant={plan.highlighted ? 'primary' : 'outline'}
-                size="md"
-                className="w-full"
-                href={`/signup?plan=${plan.id}`}
+              {/* CTA button */}
+              <button
+                className="w-full py-3.5 rounded-xl text-[14px] font-medium transition-all duration-200"
+                style={
+                  plan.highlighted
+                    ? {
+                        background: 'linear-gradient(135deg, var(--accent), #4338CA)',
+                        color: '#fff',
+                        boxShadow: '0 8px 24px rgba(99,102,241,.4)',
+                      }
+                    : {
+                        background: 'var(--glass-bg)',
+                        border: '1px solid var(--glass-border)',
+                        color: 'var(--text-1)',
+                      }
+                }
+                onMouseEnter={(e) => {
+                  if (!plan.highlighted) {
+                    e.currentTarget.style.borderColor = 'rgba(99,102,241,.4)'
+                    e.currentTarget.style.background = 'var(--accent-dim)'
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (!plan.highlighted) {
+                    e.currentTarget.style.borderColor = 'var(--glass-border)'
+                    e.currentTarget.style.background = 'var(--glass-bg)'
+                  }
+                }}
               >
                 {plan.ctaLabel}
-              </Button>
+              </button>
 
-              {/* Features List */}
-              <ul className="flex flex-col gap-2">
+              {/* Divider */}
+              <div
+                className="h-px"
+                style={{ background: 'var(--glass-border)' }}
+              />
+
+              {/* Features list */}
+              <ul className="flex flex-col gap-3">
                 {plan.features.map((feature) => (
                   <li
                     key={feature.label}
-                    className="flex items-center gap-2 text-sm"
+                    className="flex items-start gap-2.5 text-[13px]"
                   >
                     {feature.included ? (
                       <Check
-                        size={14}
-                        className="text-green-600 shrink-0"
-                        strokeWidth={2}
+                        size={15}
+                        strokeWidth={1.5}
+                        className="flex-shrink-0 mt-0.5"
+                        style={{ color: 'var(--accent-hi)' }}
                       />
                     ) : (
                       <Minus
-                        size={14}
-                        className="text-[var(--text-2)] shrink-0"
-                        strokeWidth={2}
+                        size={15}
+                        strokeWidth={1.5}
+                        className="flex-shrink-0 mt-0.5"
+                        style={{ color: 'var(--dim)' }}
                       />
                     )}
-                    <span className={feature.included ? 'text-[var(--text-1)]' : 'text-[var(--text-2)]'}>
+                    <span
+                      style={{
+                        color: feature.included
+                          ? 'var(--muted)'
+                          : 'var(--dim)',
+                      }}
+                    >
                       {feature.label}
                     </span>
                   </li>
@@ -117,7 +288,7 @@ export function PricingSection({ plans }: PricingSectionProps) {
               </ul>
             </motion.div>
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   )
